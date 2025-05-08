@@ -27,7 +27,7 @@ export const env = createEnv({
   },
   client: {
     NEXT_PUBLIC_LOGIN_BUTTON_TEXT: z.string().default('Login with OAuth'),
-    NEXT_PUBLIC_MARZBAN_INSTANCE_URL: z.string().url(),
+    NEXT_PUBLIC_MARZBAN_INSTANCE_URL: z.string().url().optional(),
     NEXT_PUBLIC_PAGE_TITLE: z.string().default('VPN'),
   },
   shared: {},

@@ -1,6 +1,6 @@
 {
   "name": "oauth-vpn-portal",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "author": {
     "name": "Kirill Chuprov",
@@ -10,11 +10,13 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
+    "start:docker": "npm run db:migrate && next start",
     "lint": "biome check",
     "lint:fix": "biome check --write .",
     "lint:strict": "biome check",
     "format": "biome check --write .",
-    "format:check": "biome check"
+    "format:check": "biome check",
+    "db:migrate": "npx @better-auth/cli migrate -y"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
