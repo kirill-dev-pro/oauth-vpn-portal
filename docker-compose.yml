@@ -1,0 +1,24 @@
+services:
+  oauth-vpn-portal:
+    # image: demostar/oauth-vpn-portal
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - OPENID_CLIENT_ID=
+      - OPENID_CLIENT_SECRET=
+      - OPENID_DISCOVERY_URL=
+      - NEXT_PUBLIC_LOGIN_BUTTON_TEXT=
+      - NEXT_PUBLIC_PAGE_TITLE=
+      - PANEL_URL=
+      - PANEL_USER_TRAFFIC_LIMIT_GB=
+      # Settings for Remnawave panel
+      - PANEL_TYPE='remnawave'
+      - REMNAWAVE_API_KEY=
+      # Or you can use Marzban credentials
+      # - PANEL_TYPE='marzban'
+      # - MARZBAN_USERNAME=
+      # - MARZBAN_PASSWORD=
+      

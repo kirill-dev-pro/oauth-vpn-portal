@@ -46,6 +46,7 @@ export class RemnawaveAPI {
       activateAllInbounds: true,
       // this should be array of uuid's
       activeUserInbounds: activeInbounds,
+      email: webSiteUser.email,
     }
     try {
       const response = await this.client<
