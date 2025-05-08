@@ -15,6 +15,7 @@ export default async function DashboardLayout({
   return (
     <>
       <SmallHeader title={env.NEXT_PUBLIC_PAGE_TITLE} />
+      {/* <I18nProvider>{children}</I18nProvider> */}
       {children}
     </>
   )

@@ -38,3 +38,5 @@ next-env.d.ts
 
 .env
 marzban-config.db
+panel-config.db
+auth-db.sqlite

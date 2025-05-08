@@ -60,7 +60,7 @@ If you didn't touch your inbounds you can skip this section.
 
 By default, `oauth-vpn-portal` will try to fetch all available inbouds from your marzban instance on startup and will keep it. It will be used for all new subscriptions. If you changed your inbound configuration, make sure to restart `oauth-vpn-portal`.
 
-You can specify `MARZBAN_USER_INBOUNDS` enviroment value with stringified json configuration of inbounds for new users if you don't want use all available inbounds.
+<!-- You can specify `MARZBAN_USER_INBOUNDS` enviroment value with stringified json configuration of inbounds for new users if you don't want use all available inbounds. -->
 
 ## Database
 

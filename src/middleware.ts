@@ -1,12 +1,12 @@
+import { getSessionCookie } from 'better-auth/cookies'
 import { type NextRequest, NextResponse } from 'next/server'
-import { getSession } from './lib/session'
 
 const PROTECTED_ROUTES = ['/vpn', '/dashboard']
 
 export async function middleware(request: NextRequest) {
-  const session = await getSession()
+  const sessionCookie = getSessionCookie(request)
 
-  const isAuthenticated = !!session
+  const isAuthenticated = !!sessionCookie
 
   if (!isAuthenticated && PROTECTED_ROUTES.includes(request.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/', request.url))
@@ -16,6 +16,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  runtime: 'nodejs',
-  // matcher: ['/dashboard/:path*', '*'], // Apply middleware to specific routes
+  matcher: ['/vpn/:path*', '/signin'], // Apply middleware to specific routes
 }

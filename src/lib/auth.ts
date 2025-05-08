@@ -1,32 +1,24 @@
-import { betterAuth } from 'better-auth'
+import { betterAuth, logger } from 'better-auth'
 import { nextCookies } from 'better-auth/next-js'
 import { genericOAuth } from 'better-auth/plugins/generic-oauth'
+import Database from 'better-sqlite3'
 import { Pool } from 'pg'
 import { env } from './env'
-import { deleteSubscription, getOrCreateSubscription } from './marzban'
 
 export const auth = betterAuth({
-  database: new Pool({
-    connectionString: env.DATABASE_URL,
-  }),
+  database: env.DATABASE_URL
+    ? new Pool({ connectionString: env.DATABASE_URL })
+    : new Database('auth-db.sqlite'),
+  updateAccountOnSignIn: true,
   emailVerification: {
     enabled: true,
     async sendVerificationEmail(data, request) {
-      console.log('new account created', data.user)
-      const res = await getOrCreateSubscription(data.user)
-      console.log('new subscription added', res)
+      logger.info('new account created', data.user)
     },
   },
   user: {
     deleteUser: {
       enabled: true,
-      async beforeDelete(user, request) {
-        const res = await deleteSubscription(user)
-        console.log('deleteSubscription', res)
-      },
-      // async afterDelete(user, request) {
-      //   await deleteSubscription(user)
-      // },
     },
   },
   plugins: [

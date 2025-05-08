@@ -14,10 +14,9 @@ const nextConfig = {
       },
     ],
   },
+
   transpilePackages: ['geist'],
-  experimental: {
-    nodeMiddleware: true,
-  },
+  output: 'standalone',
 }
 
 module.exports = nextConfig

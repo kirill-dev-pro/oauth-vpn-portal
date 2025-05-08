@@ -28,13 +28,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          'bg-background overflow-hidden overscroll-none font-sans antialiased',
-          'theme-amber',
-          fontVariables,
-        )}
-      >
+      <body className={cn('bg-background font-sans antialiased', 'theme-amber', fontVariables)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
