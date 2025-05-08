@@ -1,4 +1,4 @@
-import { betterAuth, logger } from 'better-auth'
+import { betterAuth } from 'better-auth'
 import { nextCookies } from 'better-auth/next-js'
 import { genericOAuth } from 'better-auth/plugins/generic-oauth'
 import Database from 'better-sqlite3'
@@ -10,12 +10,6 @@ export const auth = betterAuth({
     ? new Pool({ connectionString: env.DATABASE_URL })
     : new Database('auth-db.sqlite'),
   updateAccountOnSignIn: true,
-  emailVerification: {
-    enabled: true,
-    async sendVerificationEmail(data, request) {
-      logger.info('new account created', data.user)
-    },
-  },
   user: {
     deleteUser: {
       enabled: true,

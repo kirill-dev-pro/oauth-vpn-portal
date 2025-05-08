@@ -1,9 +1,9 @@
 import { Paper } from '@mantine/core'
 
 export default {
-    Paper: Paper.extend({
-        defaultProps: {
-            radius: 'lg'
-        }
-    })
+  Paper: Paper.extend({
+    defaultProps: {
+      radius: 'lg',
+    },
+  }),
 }
