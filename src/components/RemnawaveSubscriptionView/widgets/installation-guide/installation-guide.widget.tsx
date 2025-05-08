@@ -133,7 +133,7 @@ export const InstallationGuideWidget = ({
               <Button
                 component="a"
                 href={button.buttonLink}
-                key={index}
+                key={button.buttonLink}
                 leftSection={<IconExternalLink size={16} />}
                 target="_blank"
                 variant="light"
