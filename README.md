@@ -18,8 +18,11 @@ A Next.js application that provides OAuth-based authentication for Marzban VPN s
 ### Login Page
 ![Login Page](public/screenshots/login_page.png)
 
-### Main Page
+### Main Page with Marzban subscription page
 ![Main Page](public/screenshots/main_page.png)
+
+### Main Page with Remanwave built in UI
+![Main Page](public/screenshots/main_page_remnawave.png)
 
 ## Prerequisites
 
@@ -93,6 +96,7 @@ docker run demostar/oauth-vpn-portal
 ## Vercel
 
 Easiest deployment methed is just pushing it to vercel.com. You can clone this repo and use `vercel deploy` cli or you can use this button bellow to fork repo and create vercel integration
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fkirill-dev-pro%2Foauth-vpn-portal)
 
 You can create free database with Neon for app. It will provide DATABASE_URL env var automatically in the vercel.
