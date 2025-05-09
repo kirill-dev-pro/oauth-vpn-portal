@@ -8,9 +8,10 @@ import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
-export function OauthSignInButton({ autoSignIn }: { autoSignIn?: boolean }) {
+export function OauthSignInButton() {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl')
+  const autoSignIn = searchParams.get('autoSignIn') === 'true'
   const [isLoading, setIsLoading] = useState(false)
 
   const signIn = useCallback(() => {

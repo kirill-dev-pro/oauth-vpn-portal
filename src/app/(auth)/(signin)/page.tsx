@@ -16,7 +16,7 @@ export default function SignInViewPage() {
             <h1 className="text-2xl font-semibold tracking-tight">{env.NEXT_PUBLIC_PAGE_TITLE}</h1>
           </div>
           <Suspense fallback={<div className="w-full h-10 bg-gray-200" />}>
-            <OauthSignInButton autoSignIn />
+            <OauthSignInButton />
           </Suspense>
         </div>
       </div>
