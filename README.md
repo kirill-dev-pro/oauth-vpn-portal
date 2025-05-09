@@ -1,3 +1,5 @@
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fkirill-dev-pro%2Foauth-vpn-portal)
+
 # OAuth VPN Portal
 
 A Next.js application that provides OAuth-based authentication for Marzban VPN service. This portal automatically creates new VPN subscriptions for authenticated users through OAuth. After loging in users will see your subscription template from your marzban server.
@@ -54,14 +56,6 @@ bun i
 bunx @better-auth/cli migrate
 ```
 
-<!-- ## Marzban Inbound configuratio
-
-If you didn't touch your inbounds you can skip this section.
-
-By default, `oauth-vpn-portal` will try to fetch all available inbouds from your marzban instance on startup and will keep it. It will be used for all new subscriptions. If you changed your inbound configuration, make sure to restart `oauth-vpn-portal`.
-
-You can specify `MARZBAN_USER_INBOUNDS` enviroment value with stringified json configuration of inbounds for new users if you don't want use all available inbounds. -->
-
 ## Database
 
 Optional, by default app will save authenticated users in `users-db.sqlite` db on the disk. You can have voulume for this file.
@@ -95,6 +89,38 @@ bun start
 ```
 docker run demostar/oauth-vpn-portal
 ```
+
+## Vercel
+
+Easiest deployment methed is just pushing it to vercel.com. You can clone this repo and use `vercel deploy` cli or you can use this button bellow to fork repo and create vercel integration
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fkirill-dev-pro%2Foauth-vpn-portal)
+
+You can create free database with Neon for app. It will provide DATABASE_URL env var automatically in the vercel.
+
+You will need to specify environment variables. You can copy this snippet to code editor, fill with actual data, and then copy and paste to vercel all together
+
+```
+NEXT_PUBLIC_APP_URL=
+BETTER_AUTH_SECRET=
+# OAuth provider details
+OPENID_CLIENT_ID=
+OPENID_CLIENT_SECRET=
+OPENID_DISCOVERY_URL=
+PANEL_API_URL=
+PANEL_TYPE=remnawave # OR marzban
+# Optional traffic limit for each new user. From 0.001 to 1000000
+PANEL_USER_TRAFFIC_LIMIT_GB=100
+# Remanwave API
+REMNAWAVE_API_KEY=
+# OR Marzban API
+MARZBAN_USERNAME=
+MARZBAN_PASSWORD=
+# UI
+NEXT_PUBLIC_LOGIN_BUTTON_TEXT=
+NEXT_PUBLIC_PAGE_TITLE=
+```
+
+The easiest way to create your OAuth provider and manage users — [klaud.me](https://klaud.me). You can create a free group, invite people and those people will be authorized to access this app. You will need to create new OAuth app integration for your group and copy `OPENID_CLIENT_ID`, `OPENID_CLIENT_SECRET` and `OPENID_DISCOVERY_URL` from there.
 
 ## License
 
