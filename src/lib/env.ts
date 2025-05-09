@@ -1,8 +1,17 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
+const APP_URL =
+  process.env.NEXT_PUBLIC_APP_URL ||
+  `https://${process.env.VERCEL_URL}` ||
+  `https://${process.env.VERCEL_BRANCH_URL}` ||
+  `http://localhost:${process.env.PORT ?? 3000}`
+
 export const env = createEnv({
   server: {
+    BETTER_AUTH_URL: z.string().url(),
+    BETTER_AUTH_SECRET: z.string().optional(),
+
     DATABASE_URL: z.string().url().optional(),
     OPENID_CLIENT_ID: z.string(),
     OPENID_CLIENT_SECRET: z.string(),
@@ -26,12 +35,18 @@ export const env = createEnv({
     //   .optional(),
   },
   client: {
+    NEXT_PUBLIC_APP_URL: z.string().url(),
+
     NEXT_PUBLIC_LOGIN_BUTTON_TEXT: z.string().default('Login with OAuth'),
+    NEXT_PUBLIC_PAGE_TITLE: z.string().default('OAuth VPN Portal'),
     NEXT_PUBLIC_MARZBAN_INSTANCE_URL: z.string().url().optional(),
-    NEXT_PUBLIC_PAGE_TITLE: z.string().default('VPN'),
   },
   shared: {},
   runtimeEnv: {
+    NEXT_PUBLIC_APP_URL: APP_URL,
+    BETTER_AUTH_URL: APP_URL,
+    BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+
     OPENID_CLIENT_ID: process.env.OPENID_CLIENT_ID,
     OPENID_CLIENT_SECRET: process.env.OPENID_CLIENT_SECRET,
     OPENID_DISCOVERY_URL: process.env.OPENID_DISCOVERY_URL,

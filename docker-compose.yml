@@ -1,6 +1,6 @@
 services:
   oauth-vpn-portal:
-    # image: demostar/oauth-vpn-portal
+    # image: demostar/oauth-vpn-portal:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,7 +15,7 @@ services:
       - PANEL_URL=
       - PANEL_USER_TRAFFIC_LIMIT_GB=
       # Settings for Remnawave panel
-      - PANEL_TYPE='remnawave'
+      - PANEL_TYPE=remnawave
       - REMNAWAVE_API_KEY=
       # Or you can use Marzban credentials
       # - PANEL_TYPE='marzban'

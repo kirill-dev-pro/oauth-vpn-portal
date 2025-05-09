@@ -1,21 +1,20 @@
-import SmallHeader from '@/app/vpn/small-header'
+import SmallHeader from '@/app/vpn/_components/header'
 import { env } from '@/lib/env'
 import type { Metadata } from 'next'
 
+// this metadate will never be shown decause of authorization
 export const metadata: Metadata = {
   title: env.NEXT_PUBLIC_PAGE_TITLE,
-  description: 'Information about your VPN subscription',
 }
 
-export default async function DashboardLayout({
+export default async function VpnPageLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
     <>
-      <SmallHeader title={env.NEXT_PUBLIC_PAGE_TITLE} />
-      {/* <I18nProvider>{children}</I18nProvider> */}
+      <SmallHeader />
       {children}
     </>
   )

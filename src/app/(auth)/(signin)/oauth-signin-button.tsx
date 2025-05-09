@@ -5,17 +5,15 @@ import { Button } from '@/components/ui/button'
 import { authClient } from '@/lib/auth-client'
 import { env } from '@/lib/env'
 import { useSearchParams } from 'next/navigation'
-import { Suspense, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
-function OauthSignInButtonComponent() {
+export function OauthSignInButton({ autoSignIn }: { autoSignIn?: boolean }) {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl')
   const [isLoading, setIsLoading] = useState(false)
 
-  authClient.signIn.oauth2
-
-  const onClick = () => {
+  const signIn = useCallback(() => {
     const toastId = toast.loading('Signing in...')
     setIsLoading(true)
     authClient.signIn.oauth2({
@@ -31,14 +29,20 @@ function OauthSignInButtonComponent() {
         },
       },
     })
-  }
+  }, [callbackUrl])
+
+  useEffect(() => {
+    if (autoSignIn) {
+      signIn()
+    }
+  }, [autoSignIn, signIn])
 
   return (
     <Button
       className="w-full"
       variant="outline"
       type="button"
-      onClick={onClick}
+      onClick={signIn}
       isLoading={isLoading}
     >
       <Icons.oauth className="mr-2 h-4 w-4" />
@@ -46,9 +50,3 @@ function OauthSignInButtonComponent() {
     </Button>
   )
 }
-
-export const OauthSignInButton = () => (
-  <Suspense fallback={<div className="w-full h-10 bg-gray-200" />}>
-    <OauthSignInButtonComponent />
-  </Suspense>
-)

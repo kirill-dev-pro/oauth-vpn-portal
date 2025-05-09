@@ -3,10 +3,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { authClient } from '@/lib/auth-client'
+import { env } from '@/lib/env'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
-export default function Header({ title }: { title: string }) {
+export default function Header() {
   const router = useRouter()
   const { data: session } = authClient.useSession()
 
@@ -28,7 +29,7 @@ export default function Header({ title }: { title: string }) {
   return (
     <header className="flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
       <div className="flex items-center gap-2 px-4">
-        <h1 className="text-2xl font-bold">{title}</h1>
+        <h1 className="text-2xl font-bold">{env.NEXT_PUBLIC_PAGE_TITLE}</h1>
       </div>
 
       <div className="flex items-center gap-2 px-4">

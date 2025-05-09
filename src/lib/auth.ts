@@ -6,6 +6,7 @@ import { Pool } from 'pg'
 import { env } from './env'
 
 export const auth = betterAuth({
+  baseURL: env.NEXT_PUBLIC_APP_URL,
   database: env.DATABASE_URL
     ? new Pool({ connectionString: env.DATABASE_URL })
     : new Database('auth-db.sqlite'),
@@ -15,6 +16,7 @@ export const auth = betterAuth({
       enabled: true,
     },
   },
+  trustedOrigins: [env.NEXT_PUBLIC_APP_URL, 'http://localhost:3000'],
   plugins: [
     genericOAuth({
       config: [

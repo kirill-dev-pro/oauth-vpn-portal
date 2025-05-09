@@ -1,9 +1,10 @@
+import { env } from '@/lib/env'
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { OauthSignInButton } from './oauth-signin-button'
 
 export const metadata: Metadata = {
-  title: 'Authentication | Sign In',
-  description: 'Sign In page for authentication.',
+  title: env.NEXT_PUBLIC_PAGE_TITLE,
 }
 
 export default function SignInViewPage() {
@@ -12,10 +13,11 @@ export default function SignInViewPage() {
       <div className="flex h-full items-center p-4 lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">Login to your VPN</h1>
-            <p className="text-muted-foreground text-sm">Use button bellow to sign in with OAuth</p>
+            <h1 className="text-2xl font-semibold tracking-tight">{env.NEXT_PUBLIC_PAGE_TITLE}</h1>
           </div>
-          <OauthSignInButton />
+          <Suspense fallback={<div className="w-full h-10 bg-gray-200" />}>
+            <OauthSignInButton autoSignIn />
+          </Suspense>
         </div>
       </div>
     </div>

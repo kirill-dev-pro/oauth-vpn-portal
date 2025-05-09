@@ -27,14 +27,12 @@ export class MarzbanAPI {
 
     const params: UserCreate = {
       username: PANNEL_USER_ID_PREFIX + webSiteUser.id,
-      note: `User created by OAuth integration\n User ${webSiteUser.name} (${webSiteUser.email})`,
+      note: `User by oauth-vpn-portal, oauth details: ${JSON.stringify(webSiteUser)}`,
       data_limit: env.PANEL_USER_TRAFFIC_LIMIT_GB
         ? gbToBytes(env.PANEL_USER_TRAFFIC_LIMIT_GB)
         : undefined,
       data_limit_reset_strategy: 'month',
       expire: Number(EXPIRE_NEVER),
-      // this is how it should look like in request
-      //inbounds: {vless: ["VLESS RU", "VLESS WEST"], shadowsocks: ["Shadowsocks WEST", "Shadowsocks RU"]}
       inbounds: inbounds.reduce(
         (acc, inbound) => {
           if (!inbound.type || !inbound.tag) {
@@ -50,8 +48,6 @@ export class MarzbanAPI {
       ),
       proxies: DEFAULT_PROXY,
     }
-
-    // console.log('params', params)
 
     return await this.marzban.user.addUser(params)
   }
@@ -78,7 +74,6 @@ export class MarzbanAPI {
   }
 
   async loadInstanceInbounds() {
-    // await loadMarzbanInstanceInbounds(this.marzban)
     const marzbanResponse = await this.marzban.system.getInbounds()
     const arrayOfInbouds = Object.entries(Object.values(marzbanResponse).flat()).map(
       ([type, inbound]) => ({

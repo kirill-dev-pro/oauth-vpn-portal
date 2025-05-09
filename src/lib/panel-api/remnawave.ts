@@ -40,6 +40,7 @@ export class RemnawaveAPI {
       trafficLimitStrategy: 'MONTH',
       status: 'ACTIVE',
       expireAt: EXPIRE_NEVER,
+      description: `User by oauth-vpn-portal, oauth details: ${JSON.stringify(webSiteUser)}`,
       trafficLimitBytes: env.PANEL_USER_TRAFFIC_LIMIT_GB
         ? gbToBytes(env.PANEL_USER_TRAFFIC_LIMIT_GB)
         : undefined,
