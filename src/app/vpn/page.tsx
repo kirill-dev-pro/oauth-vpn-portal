@@ -21,6 +21,7 @@ export default async function VpnPage() {
     }
     const remnawaveAPI = new RemnawaveAPI(env.PANEL_API_URL, env.REMNAWAVE_API_KEY)
     const panelUser = await remnawaveAPI.getOrCreatePanelUser(user)
+    await remnawaveAPI.updatePanelUser(panelUser.user.shortUuid)
 
     return (
       <div className="w-full flex justify-center items-center">
@@ -48,6 +49,7 @@ export default async function VpnPage() {
       baseUrl: env.PANEL_API_URL,
     })
     const panelUser = await marzbanAPI.getOrCreatePanelUser(user)
+    await marzbanAPI.updatePanelUser(user)
 
     return (
       <iframe

@@ -60,6 +60,16 @@ export class MarzbanAPI {
     return user
   }
 
+  /**
+   * This updates the user's traffic limit
+   * @param webSiteUser - The user from the web site
+   */
+  async updatePanelUser(webSiteUser: User) {
+    await this.marzban.user.modifyUser(PANNEL_USER_ID_PREFIX + webSiteUser.id, {
+      data_limit: env.PANEL_USER_TRAFFIC_LIMIT_GB,
+    })
+  }
+
   async getPanelUser(webSiteUser: User): Promise<MarzbanPanelUser | null> {
     try {
       const user = await this.marzban.user.getUser(PANNEL_USER_ID_PREFIX + webSiteUser.id)

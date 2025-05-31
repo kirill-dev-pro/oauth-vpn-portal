@@ -4,6 +4,7 @@ import {
   GetInboundsCommand,
   GetSubscriptionInfoByShortUuidCommand,
   GetUserByUsernameCommand,
+  UpdateUserCommand,
 } from '@remnawave/backend-contract'
 import axios, { type AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 import type { User } from 'better-auth'
@@ -108,6 +109,27 @@ export class RemnawaveAPI {
     })
 
     return subscription.data.response
+  }
+
+  /**
+   * This updates the user's traffic limit
+   * @param uuid - The user's uuid
+   */
+  async updatePanelUser(uuid: string) {
+    await this.client<
+      UpdateUserCommand.Response,
+      AxiosResponse<UpdateUserCommand.Response>,
+      UpdateUserCommand.Request
+    >({
+      url: UpdateUserCommand.url,
+      method: 'put',
+      data: {
+        uuid,
+        trafficLimitBytes: env.PANEL_USER_TRAFFIC_LIMIT_GB
+          ? gbToBytes(env.PANEL_USER_TRAFFIC_LIMIT_GB)
+          : undefined,
+      },
+    })
   }
 
   async deletePanelUser(webSiteUser: User): Promise<void> {
