@@ -21,7 +21,7 @@ export default async function VpnPage() {
     }
     const remnawaveAPI = new RemnawaveAPI(env.PANEL_API_URL, env.REMNAWAVE_API_KEY)
     const panelUser = await remnawaveAPI.getOrCreatePanelUser(user)
-    await remnawaveAPI.updatePanelUser(panelUser.user.shortUuid)
+    await remnawaveAPI.updatePanelUser(user)
 
     return (
       <div className="w-full flex justify-center items-center">
