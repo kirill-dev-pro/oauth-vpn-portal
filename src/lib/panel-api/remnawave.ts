@@ -115,7 +115,11 @@ export class RemnawaveAPI {
    * This updates the user's traffic limit
    * @param uuid - The user's uuid
    */
-  async updatePanelUser(uuid: string) {
+  async updatePanelUser(webSiteUser: User) {
+    const user = await this.getPanelUser(webSiteUser)
+    if (!user) {
+      throw new Error('User not found')
+    }
     await this.client<
       UpdateUserCommand.Response,
       AxiosResponse<UpdateUserCommand.Response>,
@@ -124,7 +128,7 @@ export class RemnawaveAPI {
       url: UpdateUserCommand.url,
       method: 'put',
       data: {
-        uuid,
+        uuid: user.uuid,
         trafficLimitBytes: env.PANEL_USER_TRAFFIC_LIMIT_GB
           ? gbToBytes(env.PANEL_USER_TRAFFIC_LIMIT_GB)
           : undefined,
