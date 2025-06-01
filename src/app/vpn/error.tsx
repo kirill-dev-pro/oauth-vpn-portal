@@ -16,14 +16,14 @@ export default function ErrorFallback({
   }, [error])
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h2>Something went wrong!</h2>
+    <div className="flex flex-col items-center justify-center h-screen gap-4">
+      <h2>{error.name || 'Something went wrong!'}</h2>
       <p className="text-sm text-muted-foreground">{error.message}</p>
       <Button
         type="button"
         onClick={
           // Attempt to recover by trying to re-render the segment
-          () => reset()
+          () => window.location.reload()
         }
       >
         Try again

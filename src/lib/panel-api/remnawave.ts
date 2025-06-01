@@ -6,7 +6,7 @@ import {
   GetUserByUsernameCommand,
   UpdateUserCommand,
 } from '@remnawave/backend-contract'
-import axios, { type AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
+import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 import type { User } from 'better-auth'
 import { env } from '../env'
 import { gbToBytes } from '../utils'
@@ -120,13 +120,14 @@ export class RemnawaveAPI {
     if (!user) {
       throw new Error('User not found')
     }
+
     await this.client<
       UpdateUserCommand.Response,
       AxiosResponse<UpdateUserCommand.Response>,
       UpdateUserCommand.Request
     >({
       url: UpdateUserCommand.url,
-      method: 'put',
+      method: 'post',
       data: {
         uuid: user.uuid,
         trafficLimitBytes: env.PANEL_USER_TRAFFIC_LIMIT_GB
@@ -148,14 +149,23 @@ export class RemnawaveAPI {
   }
 
   async loadInstanceInbounds() {
-    const { data } = await this.client<
-      GetInboundsCommand.Response,
-      AxiosResponse<GetInboundsCommand.Response>
-    >({
-      url: GetInboundsCommand.url,
-      method: 'get',
-    })
+    try {
+      const { data } = await this.client<
+        GetInboundsCommand.Response,
+        AxiosResponse<GetInboundsCommand.Response>
+      >({
+        url: GetInboundsCommand.url,
+        method: 'get',
+      })
 
-    return data.response
+      return data.response
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 404) {
+          throw new Error('404 Axios Error, check your API key and URL')
+        }
+      }
+      throw error
+    }
   }
 }

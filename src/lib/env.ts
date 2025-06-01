@@ -3,8 +3,11 @@ import { z } from 'zod'
 
 const APP_URL =
   process.env.NEXT_PUBLIC_APP_URL ||
-  `https://${process.env.VERCEL_URL}` ||
-  `https://${process.env.VERCEL_BRANCH_URL}` ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : undefined) ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
+  (process.env.VERCEL_BRANCH_URL ? `https://${process.env.VERCEL_BRANCH_URL}` : undefined) ||
   `http://localhost:${process.env.PORT ?? 3000}`
 
 export const env = createEnv({
