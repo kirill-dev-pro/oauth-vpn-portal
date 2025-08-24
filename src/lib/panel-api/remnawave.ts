@@ -1,7 +1,8 @@
 import {
   CreateUserCommand,
   DeleteUserCommand,
-  GetInboundsCommand,
+  GetAllInboundsCommand,
+  GetInternalSquadsCommand,
   GetSubscriptionInfoByShortUuidCommand,
   GetUserByUsernameCommand,
   UpdateUserCommand,
@@ -31,8 +32,10 @@ export class RemnawaveAPI {
   }
 
   async createNewPanelUser(webSiteUser: User) {
-    const inbounds = await this.loadInstanceInbounds()
-    const activeInbounds = inbounds.map((inbound) => inbound.uuid).filter(Boolean)
+    // const inbounds = await this.loadInstanceInbounds()
+    // const activeInbounds = inbounds.map((inbound) => inbound.uuid).filter(Boolean)
+    // const activeInternalSquads = inbounds.map((inbound) => inbound.uuid).filter(Boolean)
+    const {internalSquads} = await loadInternalSquads(this.client)
 
     const username = formatUsername(webSiteUser.id)
 
@@ -45,9 +48,9 @@ export class RemnawaveAPI {
       trafficLimitBytes: env.PANEL_USER_TRAFFIC_LIMIT_GB
         ? gbToBytes(env.PANEL_USER_TRAFFIC_LIMIT_GB)
         : undefined,
-      activateAllInbounds: true,
+
       // this should be array of uuid's
-      activeUserInbounds: activeInbounds,
+      activeInternalSquads: internalSquads.map((squad) => squad.uuid),
       email: webSiteUser.email,
     }
     try {
@@ -151,10 +154,10 @@ export class RemnawaveAPI {
   async loadInstanceInbounds() {
     try {
       const { data } = await this.client<
-        GetInboundsCommand.Response,
-        AxiosResponse<GetInboundsCommand.Response>
+        GetAllInboundsCommand.Response,
+        AxiosResponse<GetAllInboundsCommand.Response>
       >({
-        url: GetInboundsCommand.url,
+        url: GetAllInboundsCommand.url,
         method: 'get',
       })
 
@@ -168,4 +171,17 @@ export class RemnawaveAPI {
       throw error
     }
   }
+}
+
+
+const loadInternalSquads = async (client: AxiosInstance): Promise<GetInternalSquadsCommand.Response['response']> => {
+  const { data } = await client<
+    GetInternalSquadsCommand.Response,
+    AxiosResponse<GetInternalSquadsCommand.Response>
+  >({
+    url: GetInternalSquadsCommand.url,
+    method: 'get',
+  })
+
+  return data.response
 }

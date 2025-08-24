@@ -1,10 +1,10 @@
 import type { User } from 'better-auth'
-import { type Config, MarzbanSDK, type UserCreate, type UserResponse } from 'marzban-sdk'
+import { type Config, MarzbanSDK, UserApi } from 'marzban-sdk'
 import { env } from '../env'
 import { gbToBytes } from '../utils'
 import { EXPIRE_NEVER, PANNEL_USER_ID_PREFIX } from './defaults'
 
-export type MarzbanPanelUser = UserResponse
+export type MarzbanPanelUser = Awaited<ReturnType<UserApi['getUser']>>
 
 const DEFAULT_PROXY = {
   vless: {
@@ -25,7 +25,7 @@ export class MarzbanAPI {
   async createNewPanelUser(webSiteUser: User): Promise<MarzbanPanelUser> {
     const inbounds = await this.loadInstanceInbounds()
 
-    const params: UserCreate = {
+    const params: Parameters<UserApi['addUser']>[0] = {
       username: PANNEL_USER_ID_PREFIX + webSiteUser.id,
       note: `User by oauth-vpn-portal, oauth details: ${JSON.stringify(webSiteUser)}`,
       data_limit: env.PANEL_USER_TRAFFIC_LIMIT_GB
