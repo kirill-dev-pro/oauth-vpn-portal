@@ -60,7 +60,7 @@ export class RemnawaveAPI {
         CreateUserCommand.Request
       >({
         url: CreateUserCommand.url,
-        method: 'post',
+        method: CreateUserCommand.endpointDetails.REQUEST_METHOD,
         data,
       })
 
@@ -86,7 +86,7 @@ export class RemnawaveAPI {
         GetUserByUsernameCommand.Request
       >({
         url: GetUserByUsernameCommand.url(username),
-        method: 'get',
+        method: GetUserByUsernameCommand.endpointDetails.REQUEST_METHOD,
       })
       return response.data.response
     } catch (error) {
@@ -108,7 +108,7 @@ export class RemnawaveAPI {
       GetSubscriptionInfoByShortUuidCommand.Request
     >({
       url: GetSubscriptionInfoByShortUuidCommand.url(panelUser.shortUuid),
-      method: 'get',
+      method: GetSubscriptionInfoByShortUuidCommand.endpointDetails.REQUEST_METHOD,
     })
 
     return subscription.data.response
@@ -130,7 +130,7 @@ export class RemnawaveAPI {
       UpdateUserCommand.Request
     >({
       url: UpdateUserCommand.url,
-      method: 'post',
+      method: UpdateUserCommand.endpointDetails.REQUEST_METHOD,
       data: {
         uuid: user.uuid,
         trafficLimitBytes: env.PANEL_USER_TRAFFIC_LIMIT_GB
@@ -158,7 +158,7 @@ export class RemnawaveAPI {
         AxiosResponse<GetAllInboundsCommand.Response>
       >({
         url: GetAllInboundsCommand.url,
-        method: 'get',
+        method: GetAllInboundsCommand.endpointDetails.REQUEST_METHOD,
       })
 
       return data.response
@@ -180,7 +180,7 @@ const loadInternalSquads = async (client: AxiosInstance): Promise<GetInternalSqu
     AxiosResponse<GetInternalSquadsCommand.Response>
   >({
     url: GetInternalSquadsCommand.url,
-    method: 'get',
+    method: GetInternalSquadsCommand.endpointDetails.REQUEST_METHOD,
   })
 
   return data.response
