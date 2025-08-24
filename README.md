@@ -2,7 +2,9 @@
 
 # OAuth VPN Portal
 
-A Next.js application that provides OAuth-based authentication for Marzban VPN service. This portal automatically creates new VPN subscriptions for authenticated users through OAuth. After loging in users will see your subscription template from your marzban server.
+A Next.js application that provides OAuth-based authentication for Marzban and Remanwave VPN panel. This portal automatically creates new VPN subscriptions for authenticated users through OAuth. After loging in users will see your subscription template from your marzban server.
+
+NOTE: due to limitations of @remnawave/backend-contract and [Typescript SDK](https://remna.st/docs/sdk/typescript-sdk) this version of Portal may not work with some versions of remnavawe panel. Current version is confirmed to work with version 2.1.3 of remanvawe 
 
 ## Features
 
